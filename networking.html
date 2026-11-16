@@ -1,74 +1,1325 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#ffffff">
-  <title>Networking Learning Hub | Chapter 9</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Networking Learning Hub</title>
   <style>
-    :root{--ink:#172b4d;--muted:#60718a;--blue:#2563eb;--blue-dark:#1d4ed8;--sky:#eff6ff;--green:#15803d;--red:#b91c1c;--line:#e2e8f0;--surface:#fff;--soft:#f8fafc;--shadow:0 12px 32px rgba(15,35,65,.07)}
-    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:#fff;color:var(--ink);font:16px/1.65 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:var(--blue)}.container{width:min(1120px,calc(100% - 36px));margin:auto}
-    header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}nav{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-weight:800;letter-spacing:-.03em;color:var(--ink);white-space:nowrap}.nav-links{display:flex;gap:18px;flex-wrap:wrap}.nav-links a{text-decoration:none;color:#52637c;font-size:.92rem;font-weight:600}.nav-links a:hover{color:var(--blue)}main{padding-bottom:30px}section{padding:64px 0;border-bottom:1px solid var(--line)}.hero{background:linear-gradient(180deg,#f8fbff 0%,#fff 100%);padding:76px 0}.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:36px;align-items:center}h1,h2,h3,h4{line-height:1.2;letter-spacing:-.025em;margin-top:0}h1{font-size:clamp(2.4rem,5vw,4.2rem);margin-bottom:16px}h2{font-size:clamp(1.7rem,3vw,2.4rem);margin-bottom:10px}h3{font-size:1.15rem}.hero p,.section-head p{color:var(--muted)}.hero p{font-size:1.12rem;max-width:680px}.section-head{margin-bottom:26px}.section-head p{margin:0;max-width:760px}.eyebrow{font-size:.78rem;text-transform:uppercase;letter-spacing:.13em;color:var(--blue);font-weight:800}.hero-card,.panel,.quiz-card,.layer-card,.video-card,.contact-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.hero-card{padding:26px}.hero-card p,.hero-card li{color:var(--muted)}.cta-row{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:10px;padding:10px 15px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;transition:.18s ease}.btn:hover{transform:translateY(-1px)}.btn-primary{background:var(--blue);color:#fff}.btn-primary:hover{background:var(--blue-dark)}.btn-secondary{background:#fff;border-color:var(--line);color:var(--ink)}.btn-secondary:hover{background:var(--soft)}.btn-danger{background:#fff1f2;color:#be123c;border-color:#fecdd3}.stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.stat{padding:12px 16px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--muted);font-size:.9rem}.stat strong{color:var(--blue);font-size:1.15rem;margin-right:5px}
-    .grid-2{display:grid;grid-template-columns:1.2fr .8fr;gap:20px}.panel{padding:20px}.simulator-wrap{border:1px solid var(--line);border-radius:18px;background:var(--soft);overflow:hidden}.sim-toolbar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 16px 0}.sim-canvas{position:relative;height:430px;margin:16px;border:1px solid #dce5f0;border-radius:14px;overflow:hidden;background-color:#fbfdff;background-image:linear-gradient(#e9eff7 1px,transparent 1px),linear-gradient(90deg,#e9eff7 1px,transparent 1px);background-size:24px 24px}.device{position:absolute;width:112px;min-height:92px;padding:10px;background:#fff;border:1px solid #cbd5e1;border-radius:14px;text-align:center;cursor:pointer;z-index:2;box-shadow:0 4px 12px #0f172a12}.device.selected{border:2px solid var(--blue);box-shadow:0 0 0 4px #2563eb1a}.device .icon{display:block;font-size:1.65rem;line-height:1.2}.device-name{display:block;font-weight:750;font-size:.88rem}.device .ip,.device .role{display:block;color:var(--muted);font-size:.72rem}.connection{position:absolute;height:3px;background:#94a3b8;transform-origin:0 50%;z-index:1}.info-stack{display:grid;gap:16px}.info-card{padding:14px;margin-top:12px;background:var(--soft);border:1px solid var(--line);border-radius:12px}.info-card p{margin:5px 0}.badge{display:inline-block;border-radius:999px;background:var(--sky);color:var(--blue);font-size:.75rem;font-weight:800;padding:3px 9px}label{display:block;margin:10px 0 6px;font-size:.86rem;font-weight:700;color:#44546a}select,input[type=text]{width:100%;padding:10px 12px;border:1px solid #cbd5e1;border-radius:9px;background:#fff;color:var(--ink);font:inherit}select:focus,input:focus{outline:3px solid #2563eb22;border-color:var(--blue)}.status-box{margin-top:12px;min-height:56px;padding:12px;border:1px solid #bbf7d0;border-radius:10px;background:#f0fdf4;color:#166534}.status-box.error{background:#fff1f2;border-color:#fecdd3;color:#9f1239}.packet-box{height:130px;position:relative;overflow:hidden;background:var(--soft);border:1px solid var(--line);border-radius:14px;margin-top:16px}.packet-line{position:absolute;left:10%;right:10%;top:50%;height:4px;background:#bfdbfe;transform:translateY(-50%)}.packet{position:absolute;top:calc(50% - 7px);left:10%;width:14px;height:14px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 5px #2563eb24;opacity:0}.packet.animating{opacity:1;animation:travel 3s linear infinite}@keyframes travel{0%{left:10%;opacity:0}10%{opacity:1}100%{left:89%;opacity:1}}.legend{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:.88rem;margin-top:12px}.layers{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.layer-card{padding:18px;cursor:pointer;min-height:155px;transition:.2s}.layer-card:hover,.layer-card.active{border-color:var(--blue);box-shadow:0 0 0 3px #2563eb15}.layer-card .eyebrow{font-size:.72rem}.layer-detail{margin-top:16px;padding:20px;border:1px solid #bfdbfe;border-radius:14px;background:#f8fbff}.layer-detail p{margin:8px 0}
-    /* Quiz: one focused question at a time, clear progress and answer feedback. */
-    .quiz-shell{max-width:820px;margin:auto;padding:24px;background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}.quiz-top{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--muted);font-size:.9rem;font-weight:700}.progress{height:9px;background:#eaf0f7;border-radius:99px;overflow:hidden;margin:12px 0 24px}.progress-bar{height:100%;width:0;background:linear-gradient(90deg,#2563eb,#60a5fa);transition:width .25s}.quiz-card{box-shadow:none;background:transparent;border:0;padding:0}.quiz-card h3{font-size:1.35rem;margin:0 0 18px}.quiz-options{display:grid;gap:10px}.option{display:flex;align-items:center;gap:12px;text-align:left;width:100%;padding:13px 15px;border:1px solid #dbe3ee;border-radius:12px;background:#fff;color:var(--ink);font:inherit;cursor:pointer;transition:.18s}.option:hover:not(:disabled){border-color:#93b4f8;background:#f8fbff}.option-key{display:grid;place-items:center;flex:0 0 28px;height:28px;border-radius:8px;background:#f1f5f9;color:#52637c;font-weight:800;font-size:.84rem}.option.correct{border-color:#86efac;background:#f0fdf4}.option.correct .option-key{background:#dcfce7;color:#15803d}.option.incorrect{border-color:#fda4af;background:#fff1f2}.option.incorrect .option-key{background:#ffe4e6;color:#be123c}.option:disabled{cursor:default}.feedback{display:none;margin-top:16px;padding:13px 15px;border-radius:12px;background:#f8fafc;border:1px solid var(--line)}.feedback.show{display:block}.feedback.correct{background:#f0fdf4;border-color:#bbf7d0;color:#166534}.feedback.incorrect{background:#fff7ed;border-color:#fed7aa;color:#9a3412}.quiz-controls{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:20px}.quiz-result{padding:18px;border-radius:14px;background:#eff6ff;border:1px solid #bfdbfe}.chat-box{height:330px;overflow-y:auto;padding:16px;background:#f8fafc;border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;gap:10px}.message{max-width:82%;padding:11px 14px;border-radius:14px;font-size:.95rem}.message.user{align-self:flex-end;background:#2563eb;color:#fff}.message.bot{align-self:flex-start;background:#fff;border:1px solid var(--line)}.chat-controls{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:12px}.prompt-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.prompt-chip{border:1px solid var(--line);background:#fff;color:#52637c;border-radius:999px;padding:6px 11px;cursor:pointer;font-size:.82rem}.videos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.video-card{overflow:hidden}.video-card iframe{display:block;width:100%;aspect-ratio:16/9;border:0;background:#0f172a}.video-card .content{padding:16px}.video-card h3{margin-bottom:7px}.video-card p{margin:0;color:var(--muted);font-size:.92rem}.video-source{display:inline-block;margin-top:10px;font-size:.85rem;font-weight:700}.contact-section{background:#f8fafc}.contact-card{max-width:720px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:12px 24px}.contact-card p{margin:0;color:var(--muted)}.contact-card strong{color:var(--ink)}footer{padding:24px 0;text-align:center;color:var(--muted);font-size:.9rem}
-    @media(max-width:900px){.hero-grid,.grid-2{grid-template-columns:1fr}.videos-grid{grid-template-columns:1fr 1fr}.layers{grid-template-columns:1fr 1fr}}@media(max-width:620px){nav{padding:12px 0;align-items:flex-start;flex-direction:column}.nav-links{gap:10px 14px}.nav-links a{font-size:.85rem}.hero{padding:52px 0}.container{width:min(100% - 26px,1120px)}section{padding:46px 0}.videos-grid,.layers,.contact-card{grid-template-columns:1fr}.sim-canvas{height:390px}.device{width:96px;min-height:84px}.quiz-shell{padding:17px}.quiz-controls{flex-wrap:wrap}.message{max-width:92%}}
+    :root {
+      --bg: #f6f8fb;
+      --panel: #ffffff;
+      --panel-alt: #f3f7ff;
+      --line: #e5ebf3;
+      --line-strong: #d7e0ec;
+      --text: #1e293b;
+      --muted: #586c89;
+      --primary: #2563eb;
+      --primary-strong: #1d4ed8;
+      --primary-soft: #eff6ff;
+      --success: #15803d;
+      --success-soft: #ecfdf5;
+      --warn: #b45309;
+      --warn-soft: #fff7ed;
+      --danger: #be123c;
+      --danger-soft: #fff1f2;
+      --shadow: 0 14px 36px rgba(15, 23, 42, 0.07);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img, iframe { max-width: 100%; display: block; }
+
+    .container { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--primary);
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    h1, h2, h3, h4 { margin: 0 0 12px; line-height: 1.2; letter-spacing: -0.03em; }
+    h1 { font-size: clamp(2.3rem, 4vw, 4rem); }
+    h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); }
+    h3 { font-size: 1.18rem; }
+    p { margin: 0 0 12px; color: var(--muted); }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255,255,255,0.92);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 72px;
+      gap: 22px;
+    }
+
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 18px;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+    }
+
+    .nav-links a:hover { color: var(--primary); }
+
+    section {
+      padding: 68px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero {
+      background: linear-gradient(180deg, #f9fbff, #ffffff 58%);
+      padding-top: 84px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .hero-card, .panel, .quiz-shell, .video-card, .contact-card, .layer-card, .layer-detail {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 26px;
+      background: linear-gradient(180deg, #ffffff, #f8fbff);
+    }
+
+    .hero-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 22px 0;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 11px 16px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 10px 20px rgba(37,99,235,0.18);
+    }
+    .btn-primary:hover {
+      background: var(--primary-strong);
+      text-decoration: none;
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--text);
+      border-color: var(--line-strong);
+    }
+    .btn-secondary:hover {
+      background: #fafcff;
+      text-decoration: none;
+    }
+
+    .btn-danger {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border-color: #fecdd3;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .stat {
+      padding: 12px 15px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: white;
+      font-weight: 700;
+      color: var(--text);
+      box-shadow: 0 6px 16px rgba(15,23,42,0.04);
+    }
+    .stat strong {
+      color: var(--primary);
+      font-size: 1.05rem;
+      margin-right: 6px;
+    }
+
+    .section-head { margin-bottom: 26px; }
+    .section-head p { max-width: 760px; }
+
+    .grid-2 { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 22px; }
+
+    .panel {
+      padding: 20px;
+    }
+
+    .simulator-wrap {
+      background: linear-gradient(180deg, #f9fbff, #ffffff);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .sim-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 14px 14px 0;
+    }
+
+    .sim-canvas {
+      position: relative;
+      height: 420px;
+      margin: 16px;
+      border: 1px solid var(--line-strong);
+      border-radius: 14px;
+      overflow: hidden;
+      background:
+        linear-gradient(#edf4ff 1px, transparent 1px),
+        linear-gradient(90deg, #edf4ff 1px, transparent 1px),
+        linear-gradient(180deg, #ffffff, #f5f8ff);
+      background-size: 24px 24px, 24px 24px, 100% 100%;
+    }
+
+    .device {
+      position: absolute;
+      width: 118px;
+      min-height: 94px;
+      border-radius: 14px;
+      border: 1px solid var(--line-strong);
+      background: white;
+      box-shadow: 0 8px 18px rgba(15,23,42,0.06);
+      text-align: center;
+      cursor: pointer;
+      padding: 10px 8px;
+      z-index: 2;
+    }
+    .device.selected {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.12);
+    }
+    .device .icon { display: block; font-size: 1.6rem; }
+    .device-name { display: block; font-weight: 800; margin-top: 4px; font-size: 0.86rem; }
+    .device .ip, .device .role { display: block; color: var(--muted); font-size: 0.72rem; }
+
+    .connection {
+      position: absolute;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #94a3b8, #60a5fa);
+      transform-origin: 0 50%;
+      z-index: 1;
+    }
+
+    .info-stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .info-card {
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #f8fafc;
+    }
+    .info-card p { margin: 7px 0; }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 0.72rem;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 6px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    input, select {
+      width: 100%;
+      background: white;
+      border: 1px solid var(--line-strong);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font: inherit;
+      color: var(--text);
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+    }
+
+    .status-box {
+      margin-top: 14px;
+      min-height: 72px;
+      padding: 12px 13px;
+      border: 1px solid #c7f9d9;
+      border-radius: 12px;
+      background: var(--success-soft);
+      color: var(--success);
+      font-weight: 600;
+    }
+    .status-box.error {
+      background: var(--danger-soft);
+      border-color: #fecdd3;
+      color: var(--danger);
+    }
+
+    .packet-box {
+      position: relative;
+      height: 150px;
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(180deg, #f8fbff, #ffffff);
+      overflow: hidden;
+    }
+    .packet-line {
+      position: absolute;
+      left: 10%; right: 10%; top: 50%;
+      height: 4px;
+      background: linear-gradient(90deg, #bfdbfe, #93c5fd);
+      transform: translateY(-50%);
+      border-radius: 999px;
+    }
+    .packet {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--primary);
+      left: 10%;
+      top: calc(50% - 7px);
+      box-shadow: 0 0 0 6px rgba(37,99,235,0.15);
+      opacity: 0;
+    }
+    .packet.animating {
+      opacity: 1;
+      animation: packetTravel 3s linear infinite;
+    }
+    @keyframes packetTravel {
+      0% { left: 10%; opacity: 0; }
+      10% { opacity: 1; }
+      100% { left: 88%; opacity: 1; }
+    }
+
+    .legend {
+      display: flex; flex-wrap: wrap; gap: 18px; margin-top: 14px; color: var(--muted); font-size: 0.9rem;
+    }
+    .legend span { display: inline-flex; align-items: center; gap: 8px; }
+    .dot {
+      width: 12px; height: 12px; display: inline-block; border-radius: 50%;
+    }
+    .dot.comp { background: #3b82f6; }
+    .dot.switch { background: #f59e0b; }
+    .dot.router { background: #10b981; }
+
+    .layers {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .layer-card {
+      padding: 18px;
+      cursor: pointer;
+      min-height: 170px;
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+    .layer-card:hover, .layer-card.active {
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+    .layer-card h3 { margin-top: 8px; }
+    .layer-card small { display: block; color: var(--primary); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 800; }
+    .layer-detail {
+      margin-top: 18px;
+      padding: 20px; background: var(--panel-alt);
+    }
+    .layer-detail strong { color: var(--text); }
+
+    .quiz-shell {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 22px;
+    }
+    .quiz-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .progress {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: #edf2f9;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      margin: 12px 0 22px;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--primary), #60a5fa);
+      transition: width 0.2s ease;
+    }
+    .quiz-card h3 { margin-bottom: 16px; }
+    .quiz-options { display: grid; gap: 10px; }
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      background: white;
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: var(--text);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+    .option:hover:not(:disabled) { border-color: #93c5fd; background: #f8fbff; }
+    .option-key {
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: #eef2f7;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .option.correct {
+      border-color: #86efac;
+      background: var(--success-soft);
+    }
+    .option.correct .option-key { background: #dcfce7; color: var(--success); }
+    .option.incorrect {
+      border-color: #fda4af;
+      background: var(--danger-soft);
+    }
+    .option.incorrect .option-key { background: #ffe4e6; color: var(--danger); }
+    .option:disabled { cursor: default; }
+
+    .feedback {
+      display: none;
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #f8fafc;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .feedback.show { display: block; }
+    .feedback.correct {
+      background: var(--success-soft);
+      border-color: #bbf7d0;
+      color: var(--success);
+    }
+    .feedback.incorrect {
+      background: var(--warn-soft);
+      border-color: #fed7aa;
+      color: var(--warn);
+    }
+
+    .quiz-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .chat-box {
+      height: 350px;
+      overflow-y: auto;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #f8fafc;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .message {
+      max-width: 82%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+    .message.user {
+      background: var(--primary);
+      color: white;
+      align-self: flex-end;
+    }
+    .message.bot {
+      background: white;
+      border: 1px solid var(--line);
+      align-self: flex-start;
+      color: var(--text);
+    }
+    .chat-controls {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .prompt-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .prompt-chip {
+      border: 1px solid var(--line-strong);
+      background: white;
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 18px;
+    }
+    .video-card { overflow: hidden; }
+    .video-card iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 0;
+      background: #0f172a;
+    }
+    .video-card .content { padding: 16px; }
+    .video-link {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .contact-card {
+      max-width: 760px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .contact-card p { margin: 0; }
+    .contact-card strong { color: var(--text); }
+
+    footer {
+      padding: 28px 0 42px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid, .grid-2 { grid-template-columns: 1fr; }
+      .videos-grid { grid-template-columns: 1fr 1fr; }
+      .layers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      nav { flex-direction: column; align-items: flex-start; padding: 12px 0; }
+      .nav-links { gap: 8px 14px; }
+      .videos-grid, .layers, .contact-card { grid-template-columns: 1fr; }
+      .sim-canvas { height: 380px; }
+      .device { width: 96px; min-height: 84px; }
+      .quiz-controls { justify-content: flex-start; }
+      .chat-controls { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-  <header><div class="container"><nav><a class="brand" href="#top" style="text-decoration:none">Networking Learning Hub</a><div class="nav-links"><a href="#simulator">Simulator</a><a href="#packets">Packets</a><a href="#tcpip">TCP/IP</a><a href="#quiz">Quiz</a><a href="#chatbot">Chatbot</a><a href="#videos">Videos</a><a href="#contact">Contact</a></div></nav></div></header>
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#top" class="brand">Networking Learning Hub</a>
+        <div class="nav-links">
+          <a href="#simulator">Simulator</a>
+          <a href="#packets">Packets</a>
+          <a href="#tcpip">TCP/IP</a>
+          <a href="#quiz">Quiz</a>
+          <a href="#chatbot">Chatbot</a>
+          <a href="#videos">Videos</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
   <main id="top">
-    <section class="hero"><div class="container hero-grid"><div><span class="eyebrow">Chapter 9 · Networking</span><h1>Understand how networks connect us.</h1><p>Explore network devices, follow packets as they travel, learn the TCP/IP model, and check your knowledge with interactive activities.</p><div class="cta-row"><a class="btn btn-primary" href="#simulator">Explore the simulator</a><a class="btn btn-secondary" href="#quiz">Take the quiz</a></div><div class="stats"><div class="stat"><strong>5</strong> network devices</div><div class="stat"><strong>4</strong> TCP/IP layers</div><div class="stat"><strong>10</strong> quiz questions</div></div></div><aside class="hero-card"><span class="eyebrow">Networking essentials</span><h3 style="margin-top:10px">What makes a network work?</h3><p>Devices use shared rules called protocols to exchange data. Switches connect devices locally, routers connect networks, and IP addresses help data find its destination.</p><ul><li>LAN: a network over a local area</li><li>WAN: a network spanning long distances</li><li>Packets: small units of transmitted data</li></ul></aside></div></section>
-    <section id="simulator"><div class="container"><div class="section-head"><span class="eyebrow">Explore</span><h2>Interactive Network Simulator</h2><p>Select devices, inspect their addresses, change IPs, add or remove equipment, and test a simulated connection.</p></div><div class="grid-2"><div class="simulator-wrap"><div class="sim-toolbar"><button class="btn btn-primary" id="addComputerBtn">＋ Computer</button><button class="btn btn-secondary" id="addSwitchBtn">＋ Switch</button><button class="btn btn-secondary" id="addRouterBtn">＋ Router</button><button class="btn btn-danger" id="removeSelectedBtn">Remove selected</button></div><div class="sim-canvas" id="simCanvas" aria-label="Interactive network topology"></div></div><div class="info-stack"><div class="panel"><label for="deviceSelect">Selected device</label><select id="deviceSelect"></select><div class="info-card"><span class="badge" id="deviceBadge">Device</span><p><strong>Name:</strong> <span id="deviceName">—</span></p><p><strong>IP address:</strong> <span id="deviceIp">—</span></p><p><strong>Type:</strong> <span id="deviceType">—</span></p><p><strong>Function:</strong> <span id="deviceFunc">—</span></p></div><label for="ipInput">Update IP address</label><div class="chat-controls" style="margin-top:0"><input id="ipInput" type="text" placeholder="192.168.1.10"><button class="btn btn-secondary" id="applyIpBtn">Apply</button></div></div><div class="panel"><h3>Test communication</h3><label for="sourceDevice">Source device</label><select id="sourceDevice"></select><label for="destinationDevice">Destination device</label><select id="destinationDevice"></select><button class="btn btn-primary" id="sendDataBtn" style="margin-top:12px">Send test data</button><div class="status-box" id="simStatus" role="status">Choose two devices, then send test data.</div></div></div></div></div></section>
-    <section id="packets"><div class="container"><div class="section-head"><span class="eyebrow">Follow the data</span><h2>Network Packet Visualization</h2><p>Data is divided into packets, forwarded across the local network, and reassembled by the destination.</p></div><div class="grid-2"><div class="panel"><label for="packetSource">Source</label><select id="packetSource"></select><label for="packetDestination">Destination</label><select id="packetDestination"></select><div class="cta-row"><button class="btn btn-primary" id="startPacketBtn">Start</button><button class="btn btn-secondary" id="pausePacketBtn">Pause</button><button class="btn btn-secondary" id="resetPacketBtn">Reset</button></div><div class="legend">🖥 Computer　 🔁 Switch　 📡 Router</div></div><div class="panel"><h3>What is happening?</h3><p id="packetExplanation">The source creates data and divides it into packets. A switch forwards local traffic; a router forwards traffic toward other networks.</p></div></div><div class="packet-box" aria-label="Animated packet path"><div class="packet-line"></div><div class="packet" id="packetAnim"></div></div></div></section>
-    <section id="tcpip"><div class="container"><div class="section-head"><span class="eyebrow">Learn the layers</span><h2>Interactive TCP/IP Model</h2><p>Choose a layer to explore its responsibilities, common protocols, and a practical example.</p></div><div class="layers" id="tcpLayers"></div><div class="layer-detail" id="layerDetail" aria-live="polite"></div><div class="panel" style="margin-top:16px"><h3>Example: visiting a website</h3><p style="margin-bottom:0;color:var(--muted)">The Application layer prepares an HTTPS request. The Transport layer uses TCP to manage delivery. The Internet layer adds IP addressing and routes packets. The Network Access layer sends the data over Wi-Fi or Ethernet. The server's layers process the response in reverse.</p></div></div></section>
-    <section id="quiz"><div class="container"><div class="section-head"><span class="eyebrow">Check your understanding</span><h2>Networking Knowledge Quiz</h2><p>Answer 10 questions. Choose one answer for instant feedback and an explanation, then review your final score.</p></div><div class="quiz-shell"><div class="quiz-top"><span id="quizCounter">Question 1 of 10</span><span id="scoreDisplay">Score: 0</span></div><div class="progress" aria-label="Quiz progress"><div class="progress-bar" id="progressBar"></div></div><div id="quizContainer"></div><div class="quiz-controls"><button class="btn btn-secondary" id="restartQuizBtn">Restart quiz</button><button class="btn btn-primary" id="nextQuestionBtn" disabled>Next question →</button></div></div></div></section>
-    <section id="chatbot"><div class="container"><div class="section-head"><span class="eyebrow">Ask and learn</span><h2>Networking Learning Chatbot</h2><p>Ask a networking question. This on-page educational assistant provides explanations and basic troubleshooting guidance without requiring an API key.</p></div><div class="panel"><div class="chat-box" id="chatBox" aria-live="polite"></div><div class="prompt-row" id="promptRow"></div><div class="chat-controls"><input id="chatInput" type="text" placeholder="Ask about DNS, routers, packets, or troubleshooting…"><button class="btn btn-primary" id="sendChatBtn">Send</button></div></div></div></section>
-    <section id="videos"><div class="container"><div class="section-head"><span class="eyebrow">Watch and explore</span><h2>Networking Video Center</h2><p>Video embeds are provided through YouTube's official player. If an embed is unavailable in your region or browser, use the linked source to watch it on YouTube.</p></div><div class="videos-grid"><article class="video-card"><iframe src="https://www.youtube-nocookie.com/embed/qiQR5rTSshw" title="Computer Networking Course - Network Engineering" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><div class="content"><h3>Computer Networking Fundamentals</h3><p>An introductory overview of networking, protocols, and how devices communicate.</p><a class="video-source" href="https://www.youtube.com/watch?v=qiQR5rTSshw" target="_blank" rel="noopener noreferrer">Source: freeCodeCamp.org · Watch on YouTube ↗</a></div></article><article class="video-card"><iframe src="https://www.youtube-nocookie.com/embed/1z0UL shy?" title="How the Internet Works" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><div class="content"><h3>How the Internet Works</h3><p>Explore how information travels between networks and reaches its destination.</p><a class="video-source" href="https://www.youtube.com/results?search_query=how+the+internet+works+networking+educational" target="_blank" rel="noopener noreferrer">Video search: networking fundamentals ↗</a></div></article><article class="video-card"><iframe src="https://www.youtube-nocookie.com/embed/IPvYjXCsTg8" title="TCP IP Model Explained" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><div class="content"><h3>TCP/IP Model and Data Transmission</h3><p>Review networking layers and the role of protocols in moving data.</p><a class="video-source" href="https://www.youtube.com/watch?v=IPvYjXCsTg8" target="_blank" rel="noopener noreferrer">Source: Practical Networking · Watch on YouTube ↗</a></div></article></div></div></section>
-    <section class="contact-section" id="contact"><div class="container"><div class="section-head"><span class="eyebrow">Get in touch</span><h2>Contact</h2><p>Questions about this networking learning project? Contact the project creator.</p></div><div class="contact-card"><p><strong>Name</strong><br>Angel Zavala</p><p><strong>Email</strong><br><a href="mailto:azavala1@caldwell.edu">azavala1@caldwell.edu</a></p><p><strong>Phone</strong><br><a href="tel:+12014682704">201-468-2704</a></p></div></div></section>
-  </main><footer><div class="container">Networking Learning Hub · Chapter 9</div></footer>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Chapter 9 · Networking</span>
+          <h1>Understand how networks connect us.</h1>
+          <p>
+            Explore how devices communicate, how packets travel through a network, and how the TCP/IP model keeps digital communication working.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#simulator">Explore the simulator</a>
+            <a class="btn btn-secondary" href="#quiz">Take the quiz</a>
+          </div>
+          <div class="stats">
+            <div class="stat"><strong>3+</strong> computers</div>
+            <div class="stat"><strong>4</strong> TCP/IP layers</div>
+            <div class="stat"><strong>10</strong> quiz questions</div>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <span class="eyebrow">Networking basics</span>
+          <h3>Key ideas</h3>
+          <p>Networks rely on devices, protocols, and addresses to move data securely and efficiently.</p>
+          <ul>
+            <li>LAN connects nearby devices.</li>
+            <li>WAN connects networks across larger distances.</li>
+            <li>Switches manage local traffic.</li>
+            <li>Routers move traffic between networks.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="simulator">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Explore</span>
+          <h2>Interactive Network Simulator</h2>
+          <p>Select devices, change IP addresses, and test whether machines can communicate successfully.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="simulator-wrap">
+            <div class="sim-toolbar">
+              <button class="btn btn-primary" id="addComputerBtn">＋ Computer</button>
+              <button class="btn btn-secondary" id="addSwitchBtn">＋ Switch</button>
+              <button class="btn btn-secondary" id="addRouterBtn">＋ Router</button>
+              <button class="btn btn-danger" id="removeSelectedBtn">Remove selected</button>
+            </div>
+            <div class="sim-canvas" id="simCanvas" aria-label="Network simulator"></div>
+          </div>
+
+          <div class="info-stack">
+            <div class="panel">
+              <label for="deviceSelect">Selected device</label>
+              <select id="deviceSelect"></select>
+
+              <div class="info-card">
+                <span class="badge" id="deviceBadge">Device</span>
+                <p><strong>Name:</strong> <span id="deviceName">—</span></p>
+                <p><strong>IP address:</strong> <span id="deviceIp">—</span></p>
+                <p><strong>Type:</strong> <span id="deviceType">—</span></p>
+                <p><strong>Function:</strong> <span id="deviceFunc">—</span></p>
+              </div>
+
+              <label for="ipInput">Update IP address</label>
+              <div class="chat-controls" style="margin-top:0; grid-template-columns: 1fr auto;">
+                <input type="text" id="ipInput" placeholder="192.168.1.10" />
+                <button class="btn btn-secondary" id="applyIpBtn">Apply</button>
+              </div>
+            </div>
+
+            <div class="panel">
+              <h3>Test communication</h3>
+              <label for="sourceDevice">Source device</label>
+              <select id="sourceDevice"></select>
+
+              <label for="destinationDevice">Destination device</label>
+              <select id="destinationDevice"></select>
+
+              <button class="btn btn-primary" id="sendDataBtn" style="margin-top: 12px;">Send test data</button>
+              <div class="status-box" id="simStatus" role="status">Choose two devices, then send test data.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="packets">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Follow the data</span>
+          <h2>Network Packet Visualization</h2>
+          <p>Packets are small segments of data that travel through the network and are reassembled at their destination.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <label for="packetSource">Source</label>
+            <select id="packetSource"></select>
+
+            <label for="packetDestination">Destination</label>
+            <select id="packetDestination"></select>
+
+            <div class="hero-actions" style="margin-top:12px; margin-bottom:0;">
+              <button class="btn btn-primary" id="startPacketBtn">Start</button>
+              <button class="btn btn-secondary" id="pausePacketBtn">Pause</button>
+              <button class="btn btn-secondary" id="resetPacketBtn">Reset</button>
+            </div>
+
+            <div class="legend">
+              <span><i class="dot comp"></i> Computer</span>
+              <span><i class="dot switch"></i> Switch</span>
+              <span><i class="dot router"></i> Router</span>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>What is happening?</h3>
+            <p id="packetExplanation">A source device creates data and divides it into packets. The switch handles local delivery, and the router forwards traffic when packets must cross networks.</p>
+          </div>
+        </div>
+
+        <div class="packet-box" aria-label="Animated packet path">
+          <div class="packet-line"></div>
+          <div class="packet" id="packetAnim"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tcpip">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Learn the layers</span>
+          <h2>Interactive TCP/IP Model</h2>
+          <p>Select each layer to understand its responsibility, common protocols, and role in communication.</p>
+        </div>
+
+        <div class="layers" id="tcpLayers"></div>
+        <div class="layer-detail" id="layerDetail" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="quiz">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Check your learning</span>
+          <h2>Networking Quiz</h2>
+          <p>Answer 10 questions and review immediate feedback after each one.</p>
+        </div>
+
+        <div class="quiz-shell">
+          <div class="quiz-top">
+            <span id="quizCounter">Question 1 of 10</span>
+            <span id="scoreDisplay">Score: 0</span>
+          </div>
+          <div class="progress" aria-label="Quiz progress">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+          <div id="quizContainer"></div>
+          <div class="quiz-controls">
+            <button class="btn btn-secondary" id="restartQuizBtn">Restart quiz</button>
+            <button class="btn btn-primary" id="nextQuestionBtn" disabled>Next question →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="chatbot">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Ask and learn</span>
+          <h2>AI Networking Chatbot</h2>
+          <p>Ask about routers, DNS, LANs, TCP vs UDP, and basic troubleshooting.</p>
+        </div>
+
+        <div class="panel">
+          <div class="chat-box" id="chatBox" aria-live="polite"></div>
+          <div class="prompt-row" id="promptRow"></div>
+          <div class="chat-controls">
+            <input type="text" id="chatInput" placeholder="Ask a networking question..." />
+            <button class="btn btn-primary" id="sendChatBtn">Send</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="videos">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Watch and explore</span>
+          <h2>Networking Video Center</h2>
+          <p>Short, visual explanations of networking fundamentals and packet flow.</p>
+        </div>
+
+        <div class="videos-grid">
+          <article class="video-card">
+            <iframe src="https://www.youtube-nocookie.com/embed/qiQR5rTSshw" title="Computer Networking Fundamentals" allowfullscreen loading="lazy"></iframe>
+            <div class="content">
+              <h3>Introduction to Computer Networking</h3>
+              <p>An overview of how devices connect, communicate, and exchange data.</p>
+              <a class="video-link" href="https://www.youtube.com/watch?v=qiQR5rTSshw" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a>
+            </div>
+          </article>
+
+          <article class="video-card">
+            <iframe src="https://www.youtube-nocookie.com/embed/1z0ULG0lJ0A" title="How the Internet Works" allowfullscreen loading="lazy"></iframe>
+            <div class="content">
+              <h3>How the Internet Works</h3>
+              <p>A simple explanation of routing, devices, and internet communication.</p>
+              <a class="video-link" href="https://www.youtube.com/watch?v=1z0ULG0lJ0A" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a>
+            </div>
+          </article>
+
+          <article class="video-card">
+            <iframe src="https://www.youtube-nocookie.com/embed/IPvYjXCsTg8" title="TCP IP Model Explained" allowfullscreen loading="lazy"></iframe>
+            <div class="content">
+              <h3>TCP/IP Model and Packet Transmission</h3>
+              <p>Learn how the four networking layers work together to deliver data.</p>
+              <a class="video-link" href="https://www.youtube.com/watch?v=IPvYjXCsTg8" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Contact</span>
+          <h2>Project Contact</h2>
+        </div>
+
+        <div class="contact-card">
+          <p><strong>Name</strong><br />Angel Zavala</p>
+          <p><strong>Email</strong><br /><a href="mailto:azavala1@caldwell.edu">azavala1@caldwell.edu</a></p>
+          <p><strong>Phone</strong><br /><a href="tel:+12014682704">201-468-2704</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">Networking Learning Hub · Chapter 9</div>
+  </footer>
+
   <script>
-    const devices=[
-      {id:'pc1',name:'PC1',type:'computer',icon:'🖥️',ip:'192.168.1.10',x:28,y:45,fn:'Client workstation',links:['switch1']},
-      {id:'pc2',name:'PC2',type:'computer',icon:'🖥️',ip:'192.168.1.11',x:28,y:240,fn:'Client workstation',links:['switch1']},
-      {id:'pc3',name:'PC3',type:'computer',icon:'🖥️',ip:'192.168.1.12',x:205,y:140,fn:'Client workstation',links:['switch1']},
-      {id:'switch1',name:'Switch',type:'switch',icon:'🔁',ip:'192.168.1.2',x:365,y:140,fn:'Connects devices on a local network',links:['pc1','pc2','pc3','router1']},
-      {id:'router1',name:'Router',type:'router',icon:'📡',ip:'10.0.0.1',x:565,y:140,fn:'Routes traffic between networks',links:['switch1']}
+    const devices = [
+      { id: 'pc1', name: 'PC1', type: 'computer', icon: '🖥️', ip: '192.168.1.10', x: 30, y: 42, functionText: 'Client workstation', links: ['switch1'] },
+      { id: 'pc2', name: 'PC2', type: 'computer', icon: '🖥️', ip: '192.168.1.11', x: 30, y: 240, functionText: 'Client workstation', links: ['switch1'] },
+      { id: 'pc3', name: 'PC3', type: 'computer', icon: '🖥️', ip: '192.168.1.12', x: 220, y: 150, functionText: 'Client workstation', links: ['switch1'] },
+      { id: 'switch1', name: 'Switch', type: 'switch', icon: '🔁', ip: '192.168.1.2', x: 380, y: 140, functionText: 'Connects devices on a local network', links: ['pc1','pc2','pc3','router1'] },
+      { id: 'router1', name: 'Router', type: 'router', icon: '📡', ip: '10.0.0.1', x: 560, y: 140, functionText: 'Routes packets between networks', links: ['switch1'] }
     ];
-    let selectedId='pc1';
-    const $=id=>document.getElementById(id), canvas=$('simCanvas');
-    const getDevice=id=>devices.find(d=>d.id===id);
-    function fillSelects(){const old={device:$('deviceSelect').value,source:$('sourceDevice').value,dest:$('destinationDevice').value,ps:$('packetSource').value,pd:$('packetDestination').value};const computers=devices.filter(d=>d.type==='computer');const all=devices.map(d=>`<option value="${d.id}">${d.name} (${d.type})</option>`).join('');['deviceSelect','sourceDevice','destinationDevice','packetSource','packetDestination'].forEach(id=>$(id).innerHTML=all);$('deviceSelect').value=getDevice(old.device)?old.device:selectedId;$('sourceDevice').value=getDevice(old.source)?old.source:(computers[0]?.id||'');$('destinationDevice').value=getDevice(old.dest)?old.dest:(computers[1]?.id||computers[0]?.id||'');$('packetSource').value=getDevice(old.ps)?old.ps:(computers[0]?.id||'');$('packetDestination').value=getDevice(old.pd)?old.pd:(computers[1]?.id||computers[0]?.id||'');}
-    function render(){canvas.querySelectorAll('.device,.connection').forEach(el=>el.remove());devices.forEach(d=>d.links.forEach(id=>{const t=getDevice(id);if(!t||d.id>t.id)return;const x1=d.x+48,y1=d.y+42,x2=t.x+48,y2=t.y+42,line=document.createElement('div'),len=Math.hypot(x2-x1,y2-y1),angle=Math.atan2(y2-y1,x2-x1)*180/Math.PI;line.className='connection';Object.assign(line.style,{left:`${x1}px`,top:`${y1}px`,width:`${len}px`,transform:`rotate(${angle}deg)`});canvas.appendChild(line)}));devices.forEach(d=>{const el=document.createElement('button');el.type='button';el.className='device'+(d.id===selectedId?' selected':'');el.style.left=`${d.x}px`;el.style.top=`${d.y}px`;el.setAttribute('aria-label',`${d.name}, ${d.type}, ${d.ip}`);el.innerHTML=`<span class="icon">${d.icon}</span><span class="device-name">${d.name}</span><span class="ip">${d.ip}</span><span class="role">${d.type}</span>`;el.onclick=()=>selectDevice(d.id);canvas.appendChild(el)});updateInfo();}
-    function selectDevice(id){selectedId=id;$('deviceSelect').value=id;render()}
-    function updateInfo(){const d=getDevice(selectedId);if(!d)return;$('deviceBadge').textContent=d.type.toUpperCase();$('deviceName').textContent=d.name;$('deviceIp').textContent=d.ip;$('deviceType').textContent=d.type;$('deviceFunc').textContent=d.fn;$('ipInput').value=d.ip}
-    function addDevice(type){const n=devices.filter(d=>d.type===type).length+1,id=`${type}${Date.now()}`,name=type==='computer'?`PC${n+3}`:type==='switch'?`Switch ${n}`:`Router ${n}`,switchDev=devices.find(d=>d.type==='switch');const d={id,name,type,icon:type==='computer'?'🖥️':type==='switch'?'🔁':'📡',ip:type==='computer'?`192.168.1.${20+n}`:type==='switch'?'192.168.1.3':`10.0.0.${n+1}`,x:100+(devices.length%3)*150,y:35+(devices.length%4)*88,fn:type==='computer'?'Client workstation':type==='switch'?'Connects devices on a local network':'Routes traffic between networks',links:[]};if(switchDev&&(type==='computer'||type==='router')){d.links.push(switchDev.id);switchDev.links.push(id)}devices.push(d);selectedId=id;fillSelects();render()}
-    function removeSelected(){if(devices.length<=1)return;devices.splice(devices.findIndex(d=>d.id===selectedId),1);devices.forEach(d=>d.links=d.links.filter(id=>id!==selectedId));selectedId=devices[0]?.id;fillSelects();render()}
-    function applyIp(){const d=getDevice(selectedId),ip=$('ipInput').value.trim();if(d&&/^(\d{1,3}\.){3}\d{1,3}$/.test(ip)){d.ip=ip;fillSelects();$('deviceSelect').value=d.id;render()}else{$('simStatus').className='status-box error';$('simStatus').textContent='Enter a valid IPv4 address, for example 192.168.1.10.'}}
-    function testConnection(){const a=getDevice($('sourceDevice').value),b=getDevice($('destinationDevice').value),connected=a&&b&&(a.links.includes(b.id)||a.links.some(id=>getDevice(id)?.links.includes(b.id)));const success=a&&b&&a.id!==b.id&&connected;$('simStatus').className='status-box'+(success?'':' error');$('simStatus').textContent=success?`Communication successful: ${a.name} can reach ${b.name} through the connected network.`:`Communication unsuccessful. Check that the selected devices are different and connected through a switch or cable.`}
-    $('deviceSelect').onchange=e=>{selectedId=e.target.value;render()};$('applyIpBtn').onclick=applyIp;$('removeSelectedBtn').onclick=removeSelected;$('sendDataBtn').onclick=testConnection;$('addComputerBtn').onclick=()=>addDevice('computer');$('addSwitchBtn').onclick=()=>addDevice('switch');$('addRouterBtn').onclick=()=>addDevice('router');
-    function packetText(){const a=getDevice($('packetSource').value),b=getDevice($('packetDestination').value);$('packetExplanation').textContent=a&&b?`${a.name} generates data and divides it into packets. The switch forwards traffic within the local network. If the destination is on another network, the router forwards packets onward. ${b.name} receives and processes the packets.`:'Choose a source and destination device.'}
-    ['packetSource','packetDestination'].forEach(id=>$(id).onchange=packetText);$('startPacketBtn').onclick=()=>{$('packetAnim').classList.add('animating');packetText()};$('pausePacketBtn').onclick=()=>$('packetAnim').classList.remove('animating');$('resetPacketBtn').onclick=()=>{$('packetAnim').classList.remove('animating');$('packetAnim').style.left='10%'};
-    const layers=[{name:'Application',n:'Layer 4',protocols:'HTTP, HTTPS, DNS',text:'Provides network services to user applications. For example, a browser uses HTTPS to request a webpage.'},{name:'Transport',n:'Layer 3',protocols:'TCP, UDP',text:'Supports communication between applications. TCP provides reliable, ordered delivery; UDP offers lightweight, low-latency delivery.'},{name:'Internet',n:'Layer 2',protocols:'IP, ICMP',text:'Uses logical IP addresses and routing to move packets across interconnected networks.'},{name:'Network Access',n:'Layer 1',protocols:'Ethernet, Wi-Fi',text:'Moves data over the local link, including the network hardware and transmission media.'}];
-    $('tcpLayers').innerHTML=layers.map((l,i)=>`<button class="layer-card ${i===0?'active':''}" data-i="${i}" type="button"><span class="eyebrow">${l.n}</span><h3 style="margin:8px 0">${l.name}</h3><span style="color:var(--muted);font-size:.88rem">${l.protocols}</span></button>`).join('');function showLayer(i){const l=layers[i];$('layerDetail').innerHTML=`<span class="eyebrow">${l.n}</span><h3 style="margin:6px 0">${l.name} Layer</h3><p>${l.text}</p><p style="margin-bottom:0"><strong>Protocols:</strong> ${l.protocols}</p>`;document.querySelectorAll('.layer-card').forEach((el,j)=>el.classList.toggle('active',i===j))}document.querySelectorAll('.layer-card').forEach(el=>el.onclick=()=>showLayer(Number(el.dataset.i)));showLayer(0);
-    const questions=[
-      {q:'What is the primary purpose of a switch?',o:['Connects separate networks','Forwards frames within a local network','Translates domain names','Encrypts Wi-Fi traffic'],a:1,e:'A switch connects devices on a LAN and forwards frames toward the appropriate device.'},
-      {q:'Which device routes packets between different networks?',o:['Router','Switch','Hub','Repeater'],a:0,e:'A router connects networks and forwards packets based on IP addressing and routing information.'},
-      {q:'What does LAN stand for?',o:['Long Access Network','Local Area Network','Linked Address Node','Large Area Node'],a:1,e:'A LAN connects devices within a limited area, such as a home, school, or office.'},
-      {q:'What does DNS do?',o:['Encrypts every packet','Translates domain names to IP addresses','Connects a computer to Wi-Fi','Assigns MAC addresses'],a:1,e:'DNS resolves human-friendly domain names into IP addresses used to reach services.'},
-      {q:'Which transport protocol provides reliable, ordered delivery?',o:['UDP','IP','TCP','Ethernet'],a:2,e:'TCP tracks delivery and ordering, retransmitting data when needed.'},
-      {q:'Which TCP/IP layer is responsible for IP addressing and routing?',o:['Application','Transport','Internet','Network Access'],a:2,e:'The Internet layer uses IP addressing to route packets across networks.'},
-      {q:'What is a network packet?',o:['A small unit of data sent over a network','A type of router','A physical cable connector','A domain name'],a:0,e:'A packet is a formatted chunk of data transmitted through a network; packets are reassembled at the destination.'},
-      {q:'How does Wi-Fi transmit data?',o:['By radio signals','Only through fiber-optic cable','Using sound waves','Through printed circuits only'],a:0,e:'Wi-Fi uses radio waves to communicate wirelessly between devices and access points.'},
-      {q:'Which is the best example of a WAN?',o:['A single laptop','A home printer cable','The internet','A computer motherboard'],a:2,e:'A WAN spans large geographic areas and connects multiple networks; the internet is the largest example.'},
-      {q:'Which practice improves basic network security?',o:['Use the same simple password everywhere','Disable all updates','Use strong unique passwords and keep software updated','Share credentials publicly'],a:2,e:'Strong unique passwords and timely updates reduce the risk of unauthorized access and known vulnerabilities.'}
-    ];let current=0,score=0,chosen=false;
-    function renderQuestion(){const done=current>=questions.length;if(done){$('quizCounter').textContent='Quiz complete';$('scoreDisplay').textContent=`Score: ${score} / ${questions.length}`;$('progressBar').style.width='100%';$('quizContainer').innerHTML=`<div class="quiz-result"><h3>Nice work!</h3><p style="margin-bottom:0">Your final score is <strong>${score} out of ${questions.length}</strong> (${Math.round(score/questions.length*100)}%). Select “Restart quiz” to try again.</p></div>`;$('nextQuestionBtn').disabled=true;$('nextQuestionBtn').textContent='Quiz complete';return}const item=questions[current];chosen=false;$('quizCounter').textContent=`Question ${current+1} of ${questions.length}`;$('scoreDisplay').textContent=`Score: ${score}`;$('progressBar').style.width=`${current/questions.length*100}%`;$('nextQuestionBtn').disabled=true;$('nextQuestionBtn').textContent=current===questions.length-1?'See results →':'Next question →';$('quizContainer').innerHTML=`<div class="quiz-card"><h3>${item.q}</h3><div class="quiz-options">${item.o.map((option,i)=>`<button class="option" type="button" data-answer="${i}"><span class="option-key">${String.fromCharCode(65+i)}</span><span>${option}</span></button>`).join('')}</div><div class="feedback" id="quizFeedback" aria-live="polite"></div></div>`;document.querySelectorAll('.option').forEach(btn=>btn.onclick=()=>{if(chosen)return;chosen=true;const answer=Number(btn.dataset.answer),correct=answer===item.a;if(correct)score++;document.querySelectorAll('.option').forEach((el,i)=>{el.disabled=true;if(i===item.a)el.classList.add('correct');else if(i===answer)el.classList.add('incorrect')});const feedback=$('quizFeedback');feedback.className=`feedback show ${correct?'correct':'incorrect'}`;feedback.innerHTML=`<strong>${correct?'Correct!':'Not quite.'}</strong> ${item.e}`;$('scoreDisplay').textContent=`Score: ${score}`;$('nextQuestionBtn').disabled=false})}
-    $('nextQuestionBtn').onclick=()=>{if(!chosen)return;current++;renderQuestion()};$('restartQuizBtn').onclick=()=>{current=0;score=0;renderQuestion()};renderQuestion();
-    const knowledge=[['lan','A LAN (Local Area Network) connects devices over a limited area such as a home, office, or school. It commonly uses Ethernet and Wi-Fi, with switches helping devices communicate locally.'],['wan','A WAN (Wide Area Network) connects networks over large geographic areas. The internet is a familiar example of a WAN.'],['router','A router connects different networks and forwards packets toward their destination using IP addresses and routing information.'],['switch','A switch connects devices on the same local network and forwards Ethernet frames to the appropriate port.'],['tcp','TCP provides reliable, ordered delivery and checks that data arrives. UDP is connectionless and has less delivery overhead, making it useful for some real-time applications.'],['udp','UDP is a connectionless transport protocol with low overhead. Unlike TCP, it does not guarantee delivery or ordering, which can suit voice, video, or gaming.'],['dns','DNS (Domain Name System) looks up domain names, such as example.com, and returns the IP address needed to connect to the service.'],['ip address','An IP address is a logical address used to identify a device or network interface and route data. IPv4 examples look like 192.168.1.10; IPv6 addresses are longer.'],['packet','A packet is a formatted piece of data sent across a network. It includes information such as addressing so network devices can forward it; the destination processes and reassembles received data.'],['wifi','Wi-Fi sends data using radio signals. Ethernet typically uses a wired connection. Both can carry network traffic; a wired link is often more consistent, while Wi-Fi allows mobility.'],['ethernet','Ethernet is a family of wired networking technologies used on local networks. Switches forward Ethernet frames between connected devices.'],['topology','Network topology describes how devices and links are arranged. Star topology connects devices to a central switch; mesh topology provides multiple interconnections; bus and ring describe other arrangements.'],['tcp/ip','The four TCP/IP layers are Application, Transport, Internet, and Network Access. They handle user-facing protocols, process-to-process delivery, IP addressing/routing, and local transmission respectively.'],['troubleshoot','Start with the basics: check power and cables or Wi-Fi, confirm airplane mode is off, restart the device/router if appropriate, and verify IP settings. Test another site or device to narrow down whether the issue is local or broader.']];
-    function reply(q){const text=q.toLowerCase();for(const [term,answer] of knowledge){if(text.includes(term))return answer}if(text.includes('connect')||text.includes('simulator'))return 'In the simulator, select a device to see its name, IP address, and role. Choose a source and destination and send test data. Communication needs a connected path; a switch handles local traffic and a router connects networks.';return 'A network connects devices so they can exchange data using agreed protocols. Tell me whether you want to learn about addressing, devices, protocols, wireless networking, or troubleshooting, and I can explain that topic.'}
-    function addMessage(text,who){const el=document.createElement('div');el.className=`message ${who}`;el.textContent=text;$('chatBox').appendChild(el);$('chatBox').scrollTop=$('chatBox').scrollHeight}function sendChat(){const q=$('chatInput').value.trim();if(!q)return;addMessage(q,'user');$('chatInput').value='';setTimeout(()=>addMessage(reply(q),'bot'),180)}$('sendChatBtn').onclick=sendChat;$('chatInput').onkeydown=e=>{if(e.key==='Enter')sendChat()};addMessage('Hi! Ask me about LANs, WANs, routers, switches, TCP/IP, DNS, packets, Wi-Fi, or basic troubleshooting.','bot');['What is a LAN?','How does DNS work?','TCP vs UDP','How can I troubleshoot Wi-Fi?'].forEach(text=>{const b=document.createElement('button');b.className='prompt-chip';b.textContent=text;b.onclick=()=>{$('chatInput').value=text;sendChat()};$('promptRow').appendChild(b)});
-    fillSelects();render();packetText();
+
+    let selectedId = 'pc1';
+    const canvas = document.getElementById('simCanvas');
+    const getDevice = (id) => devices.find(d => d.id === id);
+
+    function updateSelects() {
+      const deviceSelect = document.getElementById('deviceSelect');
+      const sourceSelect = document.getElementById('sourceDevice');
+      const destSelect = document.getElementById('destinationDevice');
+      const packetSource = document.getElementById('packetSource');
+      const packetDest = document.getElementById('packetDestination');
+      const all = devices.map(d => `<option value="${d.id}">${d.name} (${d.type})</option>`).join('');
+
+      deviceSelect.innerHTML = all;
+      sourceSelect.innerHTML = all;
+      destSelect.innerHTML = all;
+      packetSource.innerHTML = all;
+      packetDest.innerHTML = all;
+
+      if (devices.length) {
+        const pc = devices.filter(d => d.type === 'computer');
+        deviceSelect.value = selectedId;
+        sourceSelect.value = pc[0] ? pc[0].id : devices[0].id;
+        destSelect.value = pc[1] ? pc[1].id : devices[0].id;
+        packetSource.value = pc[0] ? pc[0].id : devices[0].id;
+        packetDest.value = pc[1] ? pc[1].id : devices[0].id;
+      }
+    }
+
+    function renderNetwork() {
+      canvas.querySelectorAll('.device, .connection').forEach(el => el.remove());
+
+      devices.forEach(device => {
+        device.links.forEach(linkId => {
+          const target = getDevice(linkId);
+          if (!target) return;
+          const x1 = device.x + 58;
+          const y1 = device.y + 46;
+          const x2 = target.x + 58;
+          const y2 = target.y + 46;
+          const length = Math.hypot(x2 - x1, y2 - y1);
+          const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+
+          const line = document.createElement('div');
+          line.className = 'connection';
+          line.style.left = x1 + 'px';
+          line.style.top = y1 + 'px';
+          line.style.width = length + 'px';
+          line.style.transform = 'rotate(' + angle + 'deg)';
+          canvas.appendChild(line);
+        });
+      });
+
+      devices.forEach(device => {
+        const el = document.createElement('button');
+        el.type = 'button';
+        el.className = 'device' + (device.id === selectedId ? ' selected' : '');
+        el.style.left = device.x + 'px';
+        el.style.top = device.y + 'px';
+        el.innerHTML = `
+          <span class="icon">${device.icon}</span>
+          <span class="device-name">${device.name}</span>
+          <span class="ip">${device.ip}</span>
+          <span class="role">${device.type}</span>
+        `;
+        el.addEventListener('click', () => {
+          selectedId = device.id;
+          document.getElementById('deviceSelect').value = device.id;
+          renderNetwork();
+          updateDeviceInfo();
+        });
+        canvas.appendChild(el);
+      });
+
+      updateDeviceInfo();
+    }
+
+    function updateDeviceInfo() {
+      const device = getDevice(selectedId);
+      if (!device) return;
+      document.getElementById('deviceBadge').textContent = device.type.toUpperCase();
+      document.getElementById('deviceName').textContent = device.name;
+      document.getElementById('deviceIp').textContent = device.ip;
+      document.getElementById('deviceType').textContent = device.type;
+      document.getElementById('deviceFunc').textContent = device.functionText;
+      document.getElementById('ipInput').value = device.ip;
+    }
+
+    function addDevice(type) {
+      const nextIndex = devices.filter(d => d.type === type).length + 1;
+      const id = type + Date.now();
+      const name = type === 'computer' ? 'PC' + (nextIndex + 3) : type === 'switch' ? 'Switch ' + nextIndex : 'Router ' + nextIndex;
+      const switchDevice = devices.find(d => d.type === 'switch');
+      const newDevice = {
+        id,
+        name,
+        type,
+        icon: type === 'computer' ? '🖥️' : type === 'switch' ? '🔁' : '📡',
+        ip: type === 'computer' ? `192.168.1.${20 + nextIndex}` : type === 'switch' ? '192.168.1.3' : `10.0.0.${nextIndex + 1}`,
+        x: 110 + (devices.length % 3) * 160,
+        y: 50 + (devices.length % 4) * 90,
+        functionText: type === 'computer' ? 'Client workstation' : type === 'switch' ? 'Connects devices on a local network' : 'Routes packets between networks',
+        links: []
+      };
+
+      if (type === 'computer' && switchDevice) {
+        newDevice.links.push(switchDevice.id);
+        if (!switchDevice.links.includes(id)) switchDevice.links.push(id);
+      }
+
+      if (type === 'switch') {
+        const firstComputer = devices.find(d => d.type === 'computer');
+        if (firstComputer) newDevice.links.push(firstComputer.id);
+      }
+
+      if (type === 'router' && switchDevice) {
+        newDevice.links.push(switchDevice.id);
+        if (!switchDevice.links.includes(id)) switchDevice.links.push(id);
+      }
+
+      devices.push(newDevice);
+      selectedId = id;
+      updateSelects();
+      renderNetwork();
+    }
+
+    function removeSelected() {
+      if (devices.length <= 1) return;
+      const idx = devices.findIndex(d => d.id === selectedId);
+      if (idx === -1) return;
+      const removed = devices.splice(idx, 1)[0];
+      devices.forEach(device => {
+        device.links = device.links.filter(id => id !== removed.id);
+      });
+      selectedId = devices[0].id;
+      updateSelects();
+      renderNetwork();
+    }
+
+    function applyIp() {
+      const device = getDevice(selectedId);
+      const entered = document.getElementById('ipInput').value.trim();
+      if (!device) return;
+      const valid = /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/.test(entered);
+      if (!valid) {
+        const status = document.getElementById('simStatus');
+        status.className = 'status-box error';
+        status.textContent = 'Please enter a valid IPv4 address such as 192.168.1.10.';
+        return;
+      }
+      device.ip = entered;
+      updateSelects();
+      renderNetwork();
+    }
+
+    function testConnection() {
+      const source = getDevice(document.getElementById('sourceDevice').value);
+      const dest = getDevice(document.getElementById('destinationDevice').value);
+      const status = document.getElementById('simStatus');
+
+      if (!source || !dest || source.id === dest.id) {
+        status.className = 'status-box error';
+        status.textContent = 'Please select two different devices.';
+        return;
+      }
+
+      const connected = source.links.some(linkId => linkId === dest.id) ||
+                        dest.links.some(linkId => linkId === source.id) ||
+                        source.links.some(linkId => getDevice(linkId)?.links.includes(dest.id));
+
+      if (connected) {
+        status.className = 'status-box';
+        status.textContent = 'Communication successful: ' + source.name + ' can reach ' + dest.name + ' through the network.';
+      } else {
+        status.className = 'status-box error';
+        status.textContent = 'Communication unsuccessful. Check device connections, cables, or power status.';
+      }
+    }
+
+    function packetText() {
+      const source = getDevice(document.getElementById('packetSource').value);
+      const dest = getDevice(document.getElementById('packetDestination').value);
+      const el = document.getElementById('packetExplanation');
+      if (!source || !dest) {
+        el.textContent = 'Choose a source and destination device.';
+        return;
+      }
+      el.textContent = `${source.name} creates data and divides it into packets. The switch forwards packets across the local network, and the router forwards them onward when communication crosses between networks. ${dest.name} receives and processes the packets.`;
+    }
+
+    function renderLayers() {
+      const layers = [
+        {
+          name: 'Application',
+          number: 'Layer 4',
+          protocols: 'HTTP, HTTPS, DNS',
+          text: 'The Application layer supports software such as web browsers, email clients, and file transfer programs. This layer represents the services users interact with.'
+        },
+        {
+          name: 'Transport',
+          number: 'Layer 3',
+          protocols: 'TCP, UDP',
+          text: 'The Transport layer manages end-to-end communication between applications. TCP provides reliable delivery; UDP is lighter and faster.'
+        },
+        {
+          name: 'Internet',
+          number: 'Layer 2',
+          protocols: 'IP, ICMP',
+          text: 'The Internet layer handles logical addressing and routing. IP is used to label packets and determine where they should travel.'
+        },
+        {
+          name: 'Network Access',
+          number: 'Layer 1',
+          protocols: 'Ethernet, Wi-Fi',
+          text: 'The Network Access layer sends data over the physical medium, including cables and radio signals used by Ethernet or Wi-Fi.'
+        }
+      ];
+
+      const container = document.getElementById('tcpLayers');
+      container.innerHTML = layers.map((layer, index) => `
+        <button class="layer-card ${index === 0 ? 'active' : ''}" type="button" data-index="${index}">
+          <small>${layer.number}</small>
+          <h3>${layer.name}</h3>
+          <p>${layer.protocols}</p>
+        </button>
+      `).join('');
+
+      container.querySelectorAll('.layer-card').forEach(button => {
+        button.addEventListener('click', () => showLayer(Number(button.dataset.index)));
+      });
+
+      showLayer(0);
+    }
+
+    function showLayer(index) {
+      const layers = [
+        { name: 'Application', number: 'Layer 4', protocols: 'HTTP, HTTPS, DNS', text: 'The Application layer supports software such as web browsers, email clients, and file transfers. This is the level users interact with, such as a web page request.' },
+        { name: 'Transport', number: 'Layer 3', protocols: 'TCP, UDP', text: 'The Transport layer establishes communication between apps. TCP delivers data reliably and in order; UDP focuses on speed and low overhead.' },
+        { name: 'Internet', number: 'Layer 2', protocols: 'IP, ICMP', text: 'The Internet layer adds IP addressing and manages routing between different networks. Packets receive logical addresses here.' },
+        { name: 'Network Access', number: 'Layer 1', protocols: 'Ethernet, Wi-Fi', text: 'The Network Access layer handles the physical delivery of bits over local networks, including wired Ethernet and wireless Wi‑Fi.' }
+      ];
+
+      const layer = layers[index];
+      document.getElementById('layerDetail').innerHTML = `
+        <small class="eyebrow">${layer.number}</small>
+        <h3>${layer.name} Layer</h3>
+        <p>${layer.text}</p>
+        <p><strong>Protocols:</strong> ${layer.protocols}</p>
+      `;
+
+      document.querySelectorAll('.layer-card').forEach((btn, i) => btn.classList.toggle('active', i === index));
+    }
+
+    const questions = [
+      { q: 'What is the primary purpose of a switch?', options: ['To connect different networks together', 'To forward frames within a local network', 'To translate domain names into IP addresses', 'To encrypt all network traffic'], answer: 1, explanation: 'A switch connects devices on the same local network and forwards frames to the correct destination.' },
+      { q: 'Which device routes packets between networks?', options: ['Switch', 'Router', 'Hub', 'Printer'], answer: 1, explanation: 'Routers connect different networks and use IP routing information to forward packets.' },
+      { q: 'What does LAN mean?', options: ['Long Area Network', 'Local Area Network', 'Low Access Node', 'Large Address Network'], answer: 1, explanation: 'A LAN is a small or local network, such as a home, office, or campus building.' },
+      { q: 'What is the purpose of DNS?', options: ['It stores packets temporarily', 'It translates domain names into IP addresses', 'It speeds up Wi-Fi signals', 'It protects routers from attacks'], answer: 1, explanation: 'DNS resolves names like example.com into the IP address needed to reach the website.' },
+      { q: 'Which protocol offers reliable, ordered delivery?', options: ['UDP', 'TCP', 'HTTP', 'Ethernet'], answer: 1, explanation: 'TCP checks that data arrives correctly and in the right order before the receiver uses it.' },
+      { q: 'Which layer of TCP/IP handles IP addressing?', options: ['Application', 'Transport', 'Internet', 'Network Access'], answer: 2, explanation: 'The Internet layer handles logical addresses and packet routing across networks.' },
+      { q: 'What is a packet?', options: ['A small unit of data sent over a network', 'A type of switch', 'A wireless router port', 'A CPU core'], answer: 0, explanation: 'A packet is a small chunk of data that travels through a network and is reassembled at the destination.' },
+      { q: 'Which statement about Wi‑Fi is correct?', options: ['It uses only twisted-pair copper cables', 'It uses radio signals for wireless transmission', 'It replaces all routers', 'It removes the need for IP addresses'], answer: 1, explanation: 'Wi‑Fi transmits data using radio waves without a physical cable between devices and the access point.' },
+      { q: 'Which best describes a WAN?', options: ['A network inside one room', 'A network across a large geographic area', 'A single computer', 'A form of Ethernet cable'], answer: 1, explanation: 'A WAN covers a wide geographic area, such as cities or countries, and often includes the internet.' },
+      { q: 'Why is network security important?', options: ['It makes all devices faster', 'It helps protect data and prevent unauthorized access', 'It removes the need for routers', 'It replaces the TCP/IP model'], answer: 1, explanation: 'Security is necessary to prevent data breaches, unauthorized access, and misuse of network resources.' }
+    ];
+
+    let quizIndex = 0;
+    let score = 0;
+    let answeredCurrent = false;
+
+    function renderQuiz() {
+      const current = questions[quizIndex];
+      const quizContainer = document.getElementById('quizContainer');
+      const progressBar = document.getElementById('progressBar');
+      const nextBtn = document.getElementById('nextQuestionBtn');
+      const scoreDisplay = document.getElementById('scoreDisplay');
+      const counter = document.getElementById('quizCounter');
+
+      if (!current) {
+        counter.textContent = 'Quiz complete';
+        scoreDisplay.textContent = `Score: ${score}/${questions.length}`;
+        progressBar.style.width = '100%';
+        quizContainer.innerHTML = `<div class="quiz-card"><h3>Quiz complete</h3><p>Your final score is <strong>${score}</strong> out of <strong>${questions.length}</strong> (${Math.round((score / questions.length) * 100)}%).</p></div>`;
+        nextBtn.disabled = true;
+        nextBtn.textContent = 'Done';
+        return;
+      }
+
+      counter.textContent = `Question ${quizIndex + 1} of ${questions.length}`;
+      scoreDisplay.textContent = `Score: ${score}`;
+      progressBar.style.width = `${(quizIndex / questions.length) * 100}%`;
+      nextBtn.disabled = true;
+      nextBtn.textContent = quizIndex === questions.length - 1 ? 'See results →' : 'Next question →';
+      answeredCurrent = false;
+
+      quizContainer.innerHTML = `
+        <div class="quiz-card">
+          <h3>${current.q}</h3>
+          <div class="quiz-options">
+            ${current.options.map((option, idx) => `
+              <button class="option" type="button" data-answer="${idx}">
+                <span class="option-key">${String.fromCharCode(65 + idx)}</span>
+                <span>${option}</span>
+              </button>
+            `).join('')}
+          </div>
+          <div class="feedback" id="quizFeedback"></div>
+        </div>
+      `;
+
+      quizContainer.querySelectorAll('.option').forEach(button => {
+        button.addEventListener('click', () => {
+          if (answeredCurrent) return;
+          answeredCurrent = true;
+          const selectedIndex = Number(button.dataset.answer);
+          const isCorrect = selectedIndex === current.answer;
+          if (isCorrect) score += 1;
+
+          quizContainer.querySelectorAll('.option').forEach((opt, i) => {
+            opt.disabled = true;
+            if (i === current.answer) opt.classList.add('correct');
+            if (i === selectedIndex && i !== current.answer) opt.classList.add('incorrect');
+          });
+
+          const feedback = document.getElementById('quizFeedback');
+          feedback.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+          feedback.textContent = `${isCorrect ? 'Correct!' : 'Not quite.'} ${current.explanation}`;
+          scoreDisplay.textContent = `Score: ${score}`;
+          nextBtn.disabled = false;
+        });
+      });
+    }
+
+    document.getElementById('nextQuestionBtn').addEventListener('click', () => {
+      if (!answeredCurrent) return;
+      quizIndex += 1;
+      renderQuiz();
+    });
+
+    document.getElementById('restartQuizBtn').addEventListener('click', () => {
+      quizIndex = 0;
+      score = 0;
+      answeredCurrent = false;
+      renderQuiz();
+    });
+
+    const promptSuggestions = [
+      'What is a LAN?',
+      'How does DNS work?',
+      'What is TCP versus UDP?',
+      'How does a router work?',
+      'How do I troubleshoot Wi-Fi?'
+    ];
+
+    function addMessage(text, sender) {
+      const box = document.getElementById('chatBox');
+      const msg = document.createElement('div');
+      msg.className = 'message ' + sender;
+      msg.textContent = text;
+      box.appendChild(msg);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function chatbotReply(question) {
+      const q = question.toLowerCase();
+      if (q.includes('lan')) return 'A LAN, or Local Area Network, is a network in a small area such as a home, school, or office. Devices connect through switches or wireless access points so they can communicate locally.';
+      if (q.includes('wan')) return 'A WAN is a Wide Area Network that connects devices and networks over large geographical distances. The internet is the largest and most common example of a WAN.';
+      if (q.includes('router')) return 'A router connects different networks and decides where packets should go next. It uses IP addresses and routing rules to forward data toward its destination.';
+      if (q.includes('switch')) return 'A switch connects devices within the same local network. It forwards network frames only to the correct device, reducing unnecessary traffic.';
+      if (q.includes('tcp') && q.includes('udp')) return 'TCP is reliable and ordered, so it checks that data arrives correctly. UDP is lighter and faster, and is often used for streaming or real-time applications where speed matters more than perfect delivery.';
+      if (q.includes('dns')) return 'DNS, or Domain Name System, converts names like example.com into an IP address so computers can locate the correct service on the internet.';
+      if (q.includes('ip')) return 'An IP address identifies a device on a network. IPv4 addresses look like 192.168.1.10, while IPv6 addresses are longer and use hexadecimal notation.';
+      if (q.includes('packet')) return 'Packets are small pieces of data that travel over a network. Each packet includes addressing details, and the receiving device reassembles them to recover the original message.';
+      if (q.includes('wifi') || q.includes('ethernet')) return 'Wi‑Fi uses radio signals to connect devices wirelessly, while Ethernet uses physical cables. Ethernet is often more stable and faster, while Wi‑Fi gives mobility.';
+      if (q.includes('troubleshoot') || q.includes('problem')) return 'Basic troubleshooting includes checking power, cables, Wi‑Fi connection, router status, and IP settings. Restarting the device or router and testing another device can help narrow down the issue.';
+      if (q.includes('tcp/ip') || q.includes('model')) return 'The TCP/IP model has four layers: Application, Transport, Internet, and Network Access. Each layer has a different job, from displaying data to routing packets and sending bits over the network.';
+      if (q.includes('topology')) return 'Network topology describes how devices are arranged. Common types include star, bus, ring, and mesh. In a star topology, all devices connect to a central switch.';
+      return 'A network connects devices so they can share information using common protocols. Ask about LANs, WANs, IP addresses, routers, switches, DNS, TCP vs UDP, or troubleshooting, and I can explain it clearly.';
+    }
+
+    function sendChat() {
+      const box = document.getElementById('chatInput');
+      const q = box.value.trim();
+      if (!q) return;
+      addMessage(q, 'user');
+      box.value = '';
+      setTimeout(() => addMessage(chatbotReply(q), 'bot'), 180);
+    }
+
+    document.getElementById('sendChatBtn').addEventListener('click', sendChat);
+    document.getElementById('chatInput').addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') sendChat();
+    });
+
+    promptSuggestions.forEach(text => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'prompt-chip';
+      btn.textContent = text;
+      btn.addEventListener('click', () => {
+        document.getElementById('chatInput').value = text;
+        sendChat();
+      });
+      document.getElementById('promptRow').appendChild(btn);
+    });
+
+    document.getElementById('deviceSelect').addEventListener('change', (event) => {
+      selectedId = event.target.value;
+      renderNetwork();
+    });
+
+    document.getElementById('sourceDevice').addEventListener('change', () => packetText());
+    document.getElementById('destinationDevice').addEventListener('change', () => packetText());
+    document.getElementById('packetSource').addEventListener('change', packetText);
+    document.getElementById('packetDestination').addEventListener('change', packetText);
+    document.getElementById('sendDataBtn').addEventListener('click', testConnection);
+    document.getElementById('applyIpBtn').addEventListener('click', applyIp);
+    document.getElementById('addComputerBtn').addEventListener('click', () => addDevice('computer'));
+    document.getElementById('addSwitchBtn').addEventListener('click', () => addDevice('switch'));
+    document.getElementById('addRouterBtn').addEventListener('click', () => addDevice('router'));
+    document.getElementById('removeSelectedBtn').addEventListener('click', removeSelected);
+    document.getElementById('startPacketBtn').addEventListener('click', () => { document.getElementById('packetAnim').classList.add('animating'); packetText(); });
+    document.getElementById('pausePacketBtn').addEventListener('click', () => document.getElementById('packetAnim').classList.remove('animating'));
+    document.getElementById('resetPacketBtn').addEventListener('click', () => { document.getElementById('packetAnim').classList.remove('animating'); document.getElementById('packetAnim').style.left = '10%'; });
+
+    addMessage('Hi! Ask me about LANs, WANs, routers, switches, DNS, packets, Wi‑Fi, or troubleshooting.', 'bot');
+    updateSelects();
+    renderNetwork();
+    renderLayers();
+    packetText();
+    renderQuiz();
   </script>
 </body>
 </html>
